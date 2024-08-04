@@ -24,7 +24,8 @@ cd "$carpeta" || { echo "No se pudo cambiar de carpeta"; exit 1; }
 
 # Inicializar la carpeta o no
 
-read -p "¿Su carpeta esta inicializada? (s/n): " estado_init
+ls -lha
+read -p "¿Su carpeta tiene el archivo .git? (s/n): " estado_init
 
 if [[ $estado_init == "n" ]]; then
     git init
@@ -58,4 +59,14 @@ read -p "¿Quieres subir los cambios al repositorio remoto? (s/n): " subir_cambi
 
 if [[ $subir_cambios == "s" ]]; then
     git push || { echo "Error al hacer push"; exit 1; }
+fi
+
+read -p "¿Quieres agregar un tag? (s/n): " respuesta
+
+if [[ $respuesta == "s" ]]; then
+    read -p "Ingresa el tag: " tag
+    read -p "Ingresa el mensaje del tag: " mensaje_tag
+
+    git tag -a "$tag" -m "$mensaje_tag"
+    git push origin "$tag"
 fi

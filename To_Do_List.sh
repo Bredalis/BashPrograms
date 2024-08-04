@@ -1,33 +1,36 @@
 #!/bin/bash
 # Lista de tareas
 
-tareas=()
+echo -e "\n--- Uso del TO DO LIST ---\n"
+echo "Ingresar tarea con s"
+echo "No ingresar tarea con n"
+echo -e "Borrar tareas con s y agregar el numero de linea de esa tarea\n"
 
-read -p "¿Quieres agregar una tarea? (s/n) " respuesta
+cd /mnt/c/Users/Bradalis/Downloads/
+touch Tareas.txt
 
-while [[ $respuesta == "s" ]]; 
-do
-	read -p "¿Quieres agregar una tarea? (s/n) " respuesta
+to_do_list () {
+	echo -e "\n--- To Do List ---\n"
+	cat -n Tareas.txt
+}
 
+to_do_list
+
+echo ""
+read -p "¿Quieres agregar una tarea? " respuesta
+
+if [[ $respuesta == "s" ]]; then
 	read -p "Ingresa la tarea: " tarea
-	tareas+="$tarea"
+	echo "$tarea" >> Tareas.txt 
+fi
 
-done
-
-echo -e "\n--- To Do List ---\n"
-
-for ((i=0; i<${#tareas[*]}; i++));
-do
-	echo "$i ${tareas[i]}"
-done
-
-if [[ ${#tareas[*]} > 0 ]]; then
-
-	echo -e "\n¿Quieres borrar una tarea? (s/n) "
-	read respuesta
+if [[ $(cat Tareas.txt | wc -l) -ne 0 ]]; then
+	read -p "¿Quieres borrar una tarea? " respuesta
 
 	if [[ $respuesta == "s" ]]; then
-		read -p "Ingrese la tarea a borrar: " tarea
-		unset tareas[$tarea]
+		read -p "Ingrese la linea a borrar: " numero
+		sed -i "$numero d" Tareas.txt
 	fi
 fi
+
+to_do_list
