@@ -1,6 +1,6 @@
 #!/bin/bash
-# Monitoreo de recursos y notificacion 
-# si se pasa de los limite
+# Monitoreo de recursos y avisa 
+# si han pasado los limite
 
 # Definicion de colores usando el escape ANSI
 
